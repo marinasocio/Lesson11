@@ -4,25 +4,34 @@ const getUsers = async () => {
 		const users = await result.json();
 
 		let i = 1;
-		users.forEach(function(item) {
-      let countTrue = 0;
-      let countFalse = 0;
+		let countTrue = 0;
+		let countFalse = 0;
 
-			if ((item.userId = i)) {
-   
+		users.forEach(function(item) {
+		
+			if ((item.userId == i) && (item.id % 20)) {
+				console.log(item.id % 20);
 				if (item.completed) {
 					countTrue += 1;
 				} else {
 					countFalse += 1;
-        }
-        
+				}
 			} else {
+				if (item.completed) {
+					countTrue += 1;
+				} else {
+					countFalse += 1;
+				}
 				let li = document.createElement('li');
-				li.innerHTML = `Пользователь userID = ${item.userId + 1} имеет ${countTrue} завершенных и ${countFalse} не завершенных заданий`;
-        ul.appendChild(li);
-      }
-      i += 1;
-		});
+				li.innerHTML = `Пользователь userID = ${item.userId} имеет ${countTrue} завершенных и ${countFalse} не завершенных заданий`;
+				console.log(item.userId);
+				ul.appendChild(li);
+				countTrue = 0;
+				countFalse = 0;
+				i += 1;
+			}
+	
+		})
 	} catch (err) {
 		console.error(err);
 	}
